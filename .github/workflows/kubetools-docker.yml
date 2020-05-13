@@ -1,11 +1,11 @@
-name: Docker Image for ddns app
+name: Docker Image for kubernetes tools
 
 on:
   push:
     branches: [ master ]
     paths:
-      - 'cf-ddns/**'
-      - '.github/workflows/cf-ddns-docker.yml'
+      - 'kubetools/**'
+      - '.github/workflows/kubetools-docker.yml'
   pull_request:
     branches: [ master ]
 
@@ -17,13 +17,12 @@ jobs:
       - name: 'Checkout repo'
         uses: actions/checkout@v2
         
-      - name: 'Build and Push'
-        uses: docker/build-push-action@v1
+      - uses: docker/build-push-action@v1
         with:
-          path: cf-ddns
+          path: kubetools
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: mshade/cf-ddns
+          repository: mshade/kubetools
           tag_with_sha: true
           tag_with_ref: true
 
@@ -32,4 +31,4 @@ jobs:
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          DOCKERHUB_REPOSITORY: mshade/cf-ddns
+          DOCKERHUB_REPOSITORY: mshade/kubetools
