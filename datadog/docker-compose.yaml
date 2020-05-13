@@ -1,0 +1,13 @@
+version: '3'
+services:
+  agent:
+    restart: always
+    image: datadog/agent:latest
+    ports: 
+      - "8125:8125/udp"
+    environment:
+      - DD_API_KEY
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
