@@ -5,6 +5,7 @@ on:
     branches: [ master ]
     paths:
       - 'cf-ddns/**'
+      - '.github/workflows/cf-ddns-docker.yml'
   pull_request:
     branches: [ master ]
 
