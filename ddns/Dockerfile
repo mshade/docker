@@ -9,6 +9,7 @@ RUN go get -u github.com/cloudflare/cloudflare-go/cmd/flarectl && \
 
 
 FROM alpine
+LABEL maintainer="Mike Shade mshade@mshade.org"
 
 RUN apk add --no-cache bash curl
 
