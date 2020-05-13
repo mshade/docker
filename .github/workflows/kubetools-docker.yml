@@ -17,7 +17,8 @@ jobs:
       - name: 'Checkout repo'
         uses: actions/checkout@v2
         
-      - uses: docker/build-push-action@v1
+      - name: 'Build and Push'
+        uses: docker/build-push-action@v1
         with:
           path: kubetools
           username: ${{ secrets.DOCKER_USERNAME }}
@@ -32,3 +33,4 @@ jobs:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           DOCKERHUB_REPOSITORY: mshade/kubetools
+          README_FILEPATH: ./kubetools/README.md
