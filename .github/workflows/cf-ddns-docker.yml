@@ -1,0 +1,24 @@
+name: Docker Image for ddns app
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'cf-ddns/**'
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build and Push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker/build-push-action@v1
+        with:
+          path: cf-ddns/
+          dockerfile: cf-ddns/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: mshade/cf-ddns
+          tag_with_sha: true
+          tag_with_ref: true
