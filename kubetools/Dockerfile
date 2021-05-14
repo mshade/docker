@@ -29,5 +29,5 @@ COPY --from=pkgs /pkgs/* /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/*
 
-ENTRYPOINT /bin/bash
+CMD /bin/bash
 
