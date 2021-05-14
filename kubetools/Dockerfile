@@ -3,9 +3,9 @@ FROM garethr/kubeval:0.15.0 as kubeval
 FROM alpine as pkgs
 ARG PKGS="curl"
 
-ARG KUBECTL_VER="v1.19.2"
-ARG HELM2_VER="v2.16.12"
-ARG HELM3_VER="v3.3.4"
+ARG KUBECTL_VER="v1.21.1"
+ARG HELM2_VER="v2.17.0"
+ARG HELM3_VER="v3.5.4"
 
 WORKDIR /pkgs
 
