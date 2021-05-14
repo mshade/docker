@@ -1,9 +1,8 @@
-FROM garethr/kubeval:0.15.0 as kubeval
-
 FROM alpine as pkgs
 ARG PKGS="curl"
 
 ARG KUBECTL_VER="v1.21.1"
+ARG KUBEVAL_VER="v0.16.1"
 ARG HELM2_VER="v2.17.0"
 ARG HELM3_VER="v3.5.4"
 
@@ -15,6 +14,7 @@ RUN apk add --no-cache $PKGS && \
   mv -v linux-amd64/helm helm2 && \
   curl -L -s https://get.helm.sh/helm-$HELM3_VER-linux-amd64.tar.gz | tar -xvz linux-amd64/helm && \
   mv -v linux-amd64/helm helm3 && \
+  curl -L https://github.com/instrumenta/kubeval/releases/download/$KUBEVAL_VER/kubeval-linux-amd64.tar.gz | tar -xvz kubeval && \
   rm -rf linux-amd64 && chmod +x *
 
 
@@ -25,7 +25,6 @@ RUN apk add --no-cache bash
 
 WORKDIR /app
 
-COPY --from=kubeval /kubeval /usr/local/bin/
 COPY --from=pkgs /pkgs/* /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/*
