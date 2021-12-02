@@ -32,5 +32,8 @@ COPY --from=pkgs /pkgs/* /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/*
 
+# Install some useful plugins
+RUN helm3 plugin install https://github.com/databus23/helm-diff
+
 CMD /bin/bash
 
