@@ -24,7 +24,7 @@ RUN apk add --no-cache $PKGS && \
 FROM alpine
 LABEL maintainer="Mike Shade mshade@mshade.org"
 
-RUN apk add --no-cache bash curl
+RUN apk add --no-cache bash curl git
 
 WORKDIR /app
 
