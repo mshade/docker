@@ -5,6 +5,7 @@ ARG KUBECTL_VER="v1.22.3"
 ARG KUBEVAL_VER="v0.16.1"
 ARG HELM2_VER="v2.17.0"
 ARG HELM3_VER="v3.7.1"
+ARG HELMFILE_VER="v0.142.0"
 
 WORKDIR /pkgs
 
@@ -15,8 +16,10 @@ RUN apk add --no-cache $PKGS && \
   curl -L -s https://get.helm.sh/helm-$HELM3_VER-linux-amd64.tar.gz | tar -xvz linux-amd64/helm && \
   mv -v linux-amd64/helm helm3 && \
   curl -L https://github.com/instrumenta/kubeval/releases/download/$KUBEVAL_VER/kubeval-linux-amd64.tar.gz | tar -xvz kubeval && \
+  curl -L https://github.com/roboll/helmfile/releases/download/$HELMFILE_VER/helmfile_linux_amd64 > helmfile && \
+  # Clean up and set executable
   rm -rf linux-amd64 && chmod +x *
-
+  
 
 FROM alpine
 LABEL maintainer="Mike Shade mshade@mshade.org"
