@@ -1,5 +1,5 @@
 FROM alpine as pkgs
-ARG PKGS="curl openssl"
+ARG PKGS="curl"
 
 ARG KUBECTL_VER="v1.22.4"
 ARG KUBEVAL_VER="v0.16.1"
@@ -24,7 +24,7 @@ RUN apk add --no-cache $PKGS && \
 FROM alpine
 LABEL maintainer="Mike Shade mshade@mshade.org"
 
-RUN apk add --no-cache bash curl git
+RUN apk add --no-cache bash curl git openssl
 
 WORKDIR /app
 
