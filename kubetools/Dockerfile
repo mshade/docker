@@ -1,5 +1,5 @@
 FROM alpine as pkgs
-ARG PKGS="curl"
+ARG PKGS="curl openssl"
 
 ARG KUBECTL_VER="v1.22.4"
 ARG KUBEVAL_VER="v0.16.1"
