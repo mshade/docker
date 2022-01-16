@@ -24,7 +24,7 @@ RUN apk add --no-cache $PKGS && \
 FROM alpine
 LABEL maintainer="Mike Shade mshade@mshade.org"
 
-RUN apk add --no-cache bash bash-completion curl git jq openssl sudo yq
+RUN apk add --no-cache bash bash-completion curl git jq openssl sudo vim yq
 
 RUN adduser -h /home -s /bin/bash -D -u 1000 -G wheel kubetools && \
   echo '%wheel ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/wheel
@@ -40,5 +40,5 @@ WORKDIR /app
 RUN helm3 plugin install https://github.com/databus23/helm-diff && \
   curl https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias > /home/.complete_alias
 
-COPY .bashrc /home/.bashrc
+COPY .bashrc .vimrc /home/
 CMD /bin/bash
