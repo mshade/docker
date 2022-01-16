@@ -1,5 +1,6 @@
 export PS1='\[\033[38;5;2m\]kubetools\[\033[00m\]:[\[\033[38;5;4m\]\w\[\033[00m\]]\$ '
 export EDITOR="vim"
+export PATH=~/.krew/bin:$PATH
 
 source /etc/profile.d/bash_completion.sh
 source <(kubectl completion bash)
