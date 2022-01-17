@@ -27,7 +27,7 @@ RUN apk add --no-cache $PKGS && \
 FROM alpine:edge
 LABEL maintainer="Mike Shade mshade@mshade.org"
 
-RUN apk add --no-cache bash bash-completion curl git jq kubectx openssl sudo vim yq
+RUN apk add --no-cache bash bash-completion bind-tools curl git jq kubectx openssl sudo vim yq
 
 RUN adduser -h /home -s /bin/bash -D -u 1000 -G wheel kubetools && \
   echo '%wheel ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/wheel
@@ -45,7 +45,8 @@ RUN helm3 plugin install https://github.com/databus23/helm-diff && \
   krew install krew && \
   export PATH=~/.krew/bin:$PATH && \
   kubectl krew index add kvaps https://github.com/kvaps/krew-index && \
-  kubectl krew install kvaps/node-shell
+  kubectl krew install kvaps/node-shell && \
+  kubectl krew update && kubectl krew install pv-migrate
 
 COPY .bashrc .vimrc /home/
 CMD /bin/bash
