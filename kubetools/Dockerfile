@@ -27,7 +27,9 @@ RUN apk add --no-cache $PKGS && \
 FROM alpine:edge
 LABEL maintainer="Mike Shade mshade@mshade.org"
 
-RUN apk add --no-cache bash bash-completion bind-tools curl git jq kubectx openssl sudo vim yq
+RUN apk add --no-cache bash bash-completion bind-tools curl \
+  docker-cli docker-cli-compose docker-cli-buildx docker-compose  docker-compose-bash-completion \
+  gcompat gettext git groff jq kubectx openssl sudo vim yq
 
 RUN adduser -h /home -s /bin/bash -D -u 1000 -G wheel kubetools && \
   echo '%wheel ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/wheel
