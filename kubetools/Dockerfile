@@ -5,12 +5,14 @@ ARG KUBECTL_VER="v1.22.4"
 ARG KUBEVAL_VER="v0.16.1"
 ARG KREW_VER="v0.4.2"
 ARG HELM2_VER="v2.17.0"
-ARG HELM3_VER="v3.7.1"
+ARG HELM3_VER="v3.9.0"
 ARG HELMFILE_VER="v0.142.0"
+ARG VELERO_VERSION="v1.8.1"
 
 WORKDIR /pkgs
 
-RUN apk add --no-cache $PKGS && \
+RUN set -e && \
+  apk add --no-cache $PKGS && \
   curl -LOs https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VER}/bin/linux/amd64/kubectl && \
   curl -Ls https://get.helm.sh/helm-${HELM2_VER}-linux-amd64.tar.gz | tar -xvz linux-amd64/helm && \
   mv -v linux-amd64/helm helm2 && \
@@ -20,14 +22,17 @@ RUN apk add --no-cache $PKGS && \
   curl -Ls https://github.com/roboll/helmfile/releases/download/${HELMFILE_VER}/helmfile_linux_amd64 > helmfile && \
   curl -Ls https://github.com/kubernetes-sigs/krew/releases/download/${KREW_VER}/krew-linux_amd64.tar.gz | tar -xvz ./krew-linux_amd64 && \
   mv krew-linux_amd64 krew && \
+  curl -Ls https://github.com/vmware-tanzu/velero/releases/download/${VELERO_VERSION}/velero-${VELERO_VERSION}-linux-amd64.tar.gz \
+  | tar -xvz velero-${VELERO_VERSION}-linux-amd64/velero && mv -v velero*/velero velero && \
   # Clean up and set executable
-  rm -rf linux-amd64 && chmod +x *
+  rm -rf linux-amd64 velero-${VELERO_VERSION}* && chmod +x *
   
 
 FROM alpine:edge
 LABEL maintainer="Mike Shade mshade@mshade.org"
 
-RUN apk add --no-cache bash bash-completion bind-tools curl \
+RUN set -e && \
+  apk add --no-cache bash bash-completion bind-tools curl \
   docker-cli docker-cli-compose docker-cli-buildx docker-compose  docker-compose-bash-completion \
   gcompat gettext git groff jq kubectx openssl sudo vim yq
 
@@ -42,7 +47,8 @@ RUN chmod +x /usr/local/bin/* && \
 
 USER kubetools
 WORKDIR /app
-RUN helm3 plugin install https://github.com/databus23/helm-diff && \
+RUN set -e && \
+  helm3 plugin install https://github.com/databus23/helm-diff && \
   curl -s https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias > /home/.complete_alias && \
   krew install krew && \
   export PATH=~/.krew/bin:$PATH && \
