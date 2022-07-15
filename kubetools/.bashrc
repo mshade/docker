@@ -17,6 +17,8 @@ alias kga="kubectl get all"
 alias kctx="kubectx"
 alias kns="kubens"
 
+alias kubeval="kubeconform"
+
 complete -F _complete_alias k
 complete -F _complete_alias kg
 complete -F _complete_alias kd
