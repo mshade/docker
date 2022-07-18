@@ -1,6 +1,7 @@
 FROM alpine as pkgs
 ARG PKGS="curl"
 
+ARG K9S_VER="v0.25.21"
 ARG KUBECTL_VER="v1.24.2"
 ARG KUBECONFORM_VER="v0.4.13"
 ARG KREW_VER="v0.4.3"
@@ -12,8 +13,9 @@ ARG ARCH="amd64"
 
 WORKDIR /pkgs
 
-RUN set -e && \
-  apk add --no-cache $PKGS && \
+RUN set -e &&  \
+  apk add --no-cache $PKGS &&  \
+  curl -Ls https://github.com/derailed/k9s/releases/download/${K9S_VER}/k9s_Linux_${ARCH}.tar.gz | tar -xvz k9s && \
   curl -LOs https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VER}/bin/linux/${ARCH}/kubectl && \
   curl -Ls https://get.helm.sh/helm-${HELM2_VER}-linux-${ARCH}.tar.gz | tar -xvz linux-${ARCH}/helm && \
   mv -v linux-${ARCH}/helm helm2 && \

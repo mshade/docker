@@ -2,6 +2,10 @@ export PS1='\[\033[38;5;2m\]kubetools\[\033[00m\]:[\[\033[38;5;4m\]\w\[\033[00m\
 export EDITOR="vim"
 export PATH=~/.krew/bin:$PATH
 
+function setkube () {
+  export KUBECONFIG=~/.kube/$1.yaml
+}
+
 source /etc/profile.d/bash_completion.sh
 source <(kubectl completion bash)
 source <(helm completion bash)
@@ -40,3 +44,24 @@ _kube_namespaces()
 }
 
 complete -F _kube_namespaces kubens kns
+
+if [ ! -d ~/.kube ]; then
+echo "*****************************************************************
+Your local ~/.kube/ doesn't seem to be mounted into this container.
+Run me like this:
+  docker run -it --rm -v ~/.kube:/home/.kube kubetools
+
+Then, use \`setkube kubeconfigname\` to switch between ~/.kube/<configname>.yaml files...
+***"
+exit 1
+
+fi
+
+echo "Available KUBECONFIGs:"
+for config in ~/.kube/*.yaml
+do
+  echo $(basename $config) | sed -e 's/\.yaml$//'
+done
+
+echo
+echo "setkube <configname> to switch context"
