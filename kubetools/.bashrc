@@ -44,8 +44,6 @@ _kube_namespaces()
 }
 
 complete -F _kube_namespaces kubens kns
-<<<<<<< HEAD
-=======
 
 if [ ! -d ~/.kube ]; then
 echo "*****************************************************************
@@ -67,4 +65,3 @@ done
 
 echo
 echo "setkube <configname> to switch context"
->>>>>>> 2beb3a40dad1a106d331cfc64da713176a70d196
