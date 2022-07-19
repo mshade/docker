@@ -2,13 +2,10 @@ export PS1='\[\033[38;5;2m\]kubetools\[\033[00m\]:[\[\033[38;5;4m\]\w\[\033[00m\
 export EDITOR="vim"
 export PATH=~/.krew/bin:$PATH
 
-<<<<<<< HEAD
-=======
 function setkube () {
   export KUBECONFIG=~/.kube/$1.yaml
 }
 
->>>>>>> 2beb3a40dad1a106d331cfc64da713176a70d196
 source /etc/profile.d/bash_completion.sh
 source <(kubectl completion bash)
 source <(helm completion bash)

@@ -1,16 +1,16 @@
 FROM alpine as pkgs
 ARG PKGS="curl"
 
+ARG ARCH="amd64"
+ARG K9S_ARCH="x86_64"
 ARG K9S_VER="v0.26.0"
-ARG KUBECTL_VER="v1.24.2"
+ARG KUBECTL_VER="v1.24.3"
 ARG KUBECONFORM_VER="v0.4.13"
 ARG KREW_VER="v0.4.3"
 ARG HELM2_VER="v2.17.0"
-ARG HELM3_VER="v3.9.0"
+ARG HELM3_VER="v3.9.1"
 ARG HELMFILE_VER="v0.144.0"
 ARG VELERO_VERSION="v1.9.0"
-ARG ARCH="amd64"
-ARG K9S_ARCH="x86_64"
 
 WORKDIR /pkgs
 
@@ -43,11 +43,11 @@ RUN set -e && \
 RUN adduser -h /home -s /bin/bash -D -u 1000 -G wheel kubetools && \
   echo '%wheel ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/wheel
 
-
 COPY --from=pkgs /pkgs/* /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/* && \
-  ln -s /usr/local/bin/helm3 /usr/local/bin/helm
+  ln -s /usr/local/bin/helm3 /usr/local/bin/helm && \
+  mkdir -p /usr/local/sbin
 
 USER kubetools
 WORKDIR /app
