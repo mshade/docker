@@ -1,33 +1,6 @@
 FROM alpine as pkgs
 ARG PKGS="curl"
 
-<<<<<<< HEAD
-ARG KUBECTL_VER="v1.22.4"
-ARG KUBEVAL_VER="v0.16.1"
-ARG KREW_VER="v0.4.2"
-ARG HELM2_VER="v2.17.0"
-ARG HELM3_VER="v3.9.0"
-ARG HELMFILE_VER="v0.142.0"
-ARG VELERO_VERSION="v1.8.1"
-
-WORKDIR /pkgs
-
-RUN set -e && \
-  apk add --no-cache $PKGS && \
-  curl -LOs https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VER}/bin/linux/amd64/kubectl && \
-  curl -Ls https://get.helm.sh/helm-${HELM2_VER}-linux-amd64.tar.gz | tar -xvz linux-amd64/helm && \
-  mv -v linux-amd64/helm helm2 && \
-  curl -Ls https://get.helm.sh/helm-${HELM3_VER}-linux-amd64.tar.gz | tar -xvz linux-amd64/helm && \
-  mv -v linux-amd64/helm helm3 && \
-  curl -Ls https://github.com/instrumenta/kubeval/releases/download/${KUBEVAL_VER}/kubeval-linux-amd64.tar.gz | tar -xvz kubeval && \
-  curl -Ls https://github.com/roboll/helmfile/releases/download/${HELMFILE_VER}/helmfile_linux_amd64 > helmfile && \
-  curl -Ls https://github.com/kubernetes-sigs/krew/releases/download/${KREW_VER}/krew-linux_amd64.tar.gz | tar -xvz ./krew-linux_amd64 && \
-  mv krew-linux_amd64 krew && \
-  curl -Ls https://github.com/vmware-tanzu/velero/releases/download/${VELERO_VERSION}/velero-${VELERO_VERSION}-linux-amd64.tar.gz \
-  | tar -xvz velero-${VELERO_VERSION}-linux-amd64/velero && mv -v velero*/velero velero && \
-  # Clean up and set executable
-  rm -rf linux-amd64 velero-${VELERO_VERSION}* && chmod +x *
-=======
 ARG K9S_VER="v0.26.0"
 ARG KUBECTL_VER="v1.24.2"
 ARG KUBECONFORM_VER="v0.4.13"
@@ -57,7 +30,6 @@ RUN set -e &&  \
   | tar -xvz velero-${VELERO_VERSION}-linux-${ARCH}/velero && mv -v velero*/velero velero && \
   # Clean up and set executable
   rm -rf linux-${ARCH} velero-${VELERO_VERSION}* && chmod +x *
->>>>>>> 2beb3a40dad1a106d331cfc64da713176a70d196
   
 
 FROM alpine:edge

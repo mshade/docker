@@ -24,11 +24,8 @@ alias kga="kubectl get all"
 alias kctx="kubectx"
 alias kns="kubens"
 
-<<<<<<< HEAD
-=======
 alias kubeval="kubeconform"
 
->>>>>>> 2beb3a40dad1a106d331cfc64da713176a70d196
 complete -F _complete_alias k
 complete -F _complete_alias kg
 complete -F _complete_alias kd
