@@ -31,7 +31,7 @@ RUN set -e &&  \
   | tar -xvz velero-${VELERO_VERSION}-linux-${ARCH}/velero && mv -v velero*/velero velero && \
   curl -Ls https://github.com/argoproj/argo-cd/releases/download/${ARGO_VERSION}/argocd-linux-amd64 > argocd && \
   # Clean up and set executable
-  rm -rf linux-${ARCH} velero-${VELERO_VERSION}* && chmod +x * && \
+  rm -rf linux-${ARCH} velero-${VELERO_VERSION}* && chmod +x *
   
 
 FROM alpine:edge
