@@ -11,6 +11,7 @@ ARG HELM2_VER="v2.17.0"
 ARG HELM3_VER="v3.9.1"
 ARG HELMFILE_VER="v0.144.0"
 ARG VELERO_VERSION="v1.9.0"
+ARG ARGO_VERSION="v2.6.2"
 
 WORKDIR /pkgs
 
@@ -28,8 +29,9 @@ RUN set -e &&  \
   mv krew-linux_${ARCH} krew && \
   curl -Ls https://github.com/vmware-tanzu/velero/releases/download/${VELERO_VERSION}/velero-${VELERO_VERSION}-linux-${ARCH}.tar.gz \
   | tar -xvz velero-${VELERO_VERSION}-linux-${ARCH}/velero && mv -v velero*/velero velero && \
+  curl -Ls https://github.com/argoproj/argo-cd/releases/download/${ARGO_VERSION}/argocd-linux-amd64 > argocd && \
   # Clean up and set executable
-  rm -rf linux-${ARCH} velero-${VELERO_VERSION}* && chmod +x *
+  rm -rf linux-${ARCH} velero-${VELERO_VERSION}* && chmod +x * && \
   
 
 FROM alpine:edge
