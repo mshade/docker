@@ -51,17 +51,17 @@ Your local ~/.kube/ doesn't seem to be mounted into this container.
 Run me like this:
   docker run -it --rm -v ~/.kube:/home/.kube kubetools
 
-Then, use \`setkube kubeconfigname\` to switch between ~/.kube/<configname>.yaml files...
+Then, you may use \`setkube kubeconfigname\` to switch between ~/.kube/<configname>.yaml files...
 ***"
-exit 1
 
+else
+
+  echo "Available KUBECONFIGs:"
+  for config in ~/.kube/*.yaml
+  do
+    echo $(basename $config) | sed -e 's/\.yaml$//'
+  done
+
+  echo
+  echo "setkube <configname> to switch context"
 fi
-
-echo "Available KUBECONFIGs:"
-for config in ~/.kube/*.yaml
-do
-  echo $(basename $config) | sed -e 's/\.yaml$//'
-done
-
-echo
-echo "setkube <configname> to switch context"
