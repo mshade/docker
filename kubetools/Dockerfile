@@ -2,22 +2,21 @@ FROM alpine as pkgs
 ARG PKGS="curl"
 
 ARG ARCH="amd64"
-ARG K9S_ARCH="x86_64"
-ARG K9S_VER="v0.26.0"
-ARG KUBECTL_VER="v1.24.3"
-ARG KUBECONFORM_VER="v0.4.13"
+ARG K9S_VER="v0.27.4"
+ARG KUBECTL_VER="v1.27.2"
+ARG KUBECONFORM_VER="v0.6.2"
 ARG KREW_VER="v0.4.3"
 ARG HELM2_VER="v2.17.0"
-ARG HELM3_VER="v3.9.1"
+ARG HELM3_VER="v3.12.0"
 ARG HELMFILE_VER="v0.144.0"
-ARG VELERO_VERSION="v1.9.0"
-ARG ARGO_VERSION="v2.6.2"
+ARG VELERO_VERSION="v1.10.3"
+ARG ARGO_VERSION="v2.7.4"
 
 WORKDIR /pkgs
 
 RUN set -e &&  \
   apk add --no-cache $PKGS &&  \
-  curl -Ls https://github.com/derailed/k9s/releases/download/${K9S_VER}/k9s_Linux_${K9S_ARCH}.tar.gz | tar -xvz k9s && \
+  curl -Ls https://github.com/derailed/k9s/releases/download/${K9S_VER}/k9s_Linux_${ARCH}.tar.gz | tar -xvz k9s && \
   curl -LOs https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VER}/bin/linux/${ARCH}/kubectl && \
   curl -Ls https://get.helm.sh/helm-${HELM2_VER}-linux-${ARCH}.tar.gz | tar -xvz linux-${ARCH}/helm && \
   mv -v linux-${ARCH}/helm helm2 && \
@@ -39,7 +38,7 @@ LABEL maintainer="Mike Shade mshade@mshade.org"
 
 RUN set -e && \
   apk add --no-cache bash bash-completion bind-tools curl \
-  docker-cli docker-cli-compose docker-cli-buildx docker-compose  docker-compose-bash-completion \
+  docker-cli docker-cli-compose docker-cli-buildx docker-compose docker-bash-completion \
   gcompat gettext git groff jq kubectx openssl sudo vim yq
 
 RUN adduser -h /home -s /bin/bash -D -u 1000 -G wheel kubetools && \
