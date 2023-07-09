@@ -3,14 +3,15 @@ ARG PKGS="curl"
 
 ARG ARCH="amd64"
 ARG K9S_VER="v0.27.4"
-ARG KUBECTL_VER="v1.27.2"
+ARG KUBECTL_VER="v1.27.3"
 ARG KUBECONFORM_VER="v0.6.2"
 ARG KREW_VER="v0.4.3"
 ARG HELM2_VER="v2.17.0"
-ARG HELM3_VER="v3.12.0"
+ARG HELM3_VER="v3.12.1"
 ARG HELMFILE_VER="v0.144.0"
 ARG VELERO_VERSION="v1.10.3"
-ARG ARGO_VERSION="v2.7.4"
+ARG ARGO_VERSION="v2.7.7"
+ARG KUBENT_VERSION="nightly-0.7.0-33-gdf9a017"
 
 WORKDIR /pkgs
 
@@ -27,7 +28,9 @@ RUN set -e &&  \
   curl -Ls https://github.com/kubernetes-sigs/krew/releases/download/${KREW_VER}/krew-linux_${ARCH}.tar.gz | tar -xvz ./krew-linux_${ARCH} && \
   mv krew-linux_${ARCH} krew && \
   curl -Ls https://github.com/vmware-tanzu/velero/releases/download/${VELERO_VERSION}/velero-${VELERO_VERSION}-linux-${ARCH}.tar.gz \
-  | tar -xvz velero-${VELERO_VERSION}-linux-${ARCH}/velero && mv -v velero*/velero velero && \
+    | tar -xvz velero-${VELERO_VERSION}-linux-${ARCH}/velero && mv -v velero*/velero velero && \
+  curl -Ls https://github.com/doitintl/kube-no-trouble/releases/download/${KUBENT_VERSION}/kubent-${KUBENT_VERSION}-linux-${ARCH}.tar.gz \
+    | tar -xvz kubent && \
   curl -Ls https://github.com/argoproj/argo-cd/releases/download/${ARGO_VERSION}/argocd-linux-amd64 > argocd && \
   # Clean up and set executable
   rm -rf linux-${ARCH} velero-${VELERO_VERSION}* && chmod +x *
