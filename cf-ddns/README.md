@@ -1,49 +1,20 @@
 # cf-ddns
-Dynamic DNS utility using cloudflare's flarectl.
+Dynamic DNS for Cloudflare: points an existing A record at the public IP of the network it runs in.
 
-Provide the required config by environment variables, and running the container will update the given record with the IP fetched.
+The IP comes from Cloudflare's own `https://1.1.1.1/cdn-cgi/trace` (the address Cloudflare sees you
+connect from), so no third-party IP service is trusted. The record is only updated when it differs.
 
-`.env` example:
+Configure with environment variables:
 
 ```
-CF_API_EMAIL=derp@example.com
-CF_API_KEY=xxxxx # obtain from CF
-
-ID=xxxxxxx # record ID
-
-IP_URL=http://icanhazip.com/ # An IP provider of your choice, must return single line with just the IP
-
-RECORD=subdomain.example.com # The record to update
-ZONE=example.com # the parent zone
+CF_API_TOKEN=xxxxx         # API token with Zone:Read + DNS:Edit on the zone
+ZONE=example.com           # the zone
+RECORD=home.example.com    # an existing A record in it
 ```
 
-You can also use `flarectl` interactively via shell:
 ```
-$ docker run -it --rm mshade/flarectl /bin/ash
-/ # flarectl
-NAME:
-   flarectl - Cloudflare CLI
-
-USAGE:
-   flarectl [global options] command [command options] [arguments...]
-
-VERSION:
-   2017.10.0
-
-COMMANDS:
-   ips, i           Print Cloudflare IP ranges
-   user, u          User information
-   zone, z          Zone information
-   dns, d           DNS records
-   user-agents, ua  User-Agent blocking
-   pagerules, p     Page Rules
-   railgun, r       Railgun information
-   firewall, f      Firewall
-   help, h          Shows a list of commands or help for one command
-
-GLOBAL OPTIONS:
-   --account-id value  Optional account ID [$CF_ACCOUNT_ID]
-   --json              show output as JSON instead of as a table
-   --help, -h          show help
-   --version, -v       print the version
+docker run --rm --env-file .env mshade/cf-ddns
 ```
+
+Exits non-zero (so a CronJob/Job shows it failed) if the IP can't be determined, the zone or record
+isn't found, or the API call fails.
